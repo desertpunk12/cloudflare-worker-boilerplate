@@ -1,0 +1,27 @@
+# Build artifacts
+build/
+dist/
+*.wasm
+*.o
+
+# Node modules
+node_modules/
+package-lock.json
+yarn.lock
+
+# Generated files
+*_templ.go
+.wrangler/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment
+.env
+.env.local
+.env.*.local
