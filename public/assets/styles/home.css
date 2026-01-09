@@ -1,0 +1,436 @@
+/* cloudflare-worker-boilerplate/assets/styles/home.css
+   Purpose: Combined utility/shortcut classes to replace repeated multi-class Tailwind usage.
+   These are plain CSS fallbacks that approximate the grouped Tailwind utilities used in the template.
+   They also reference a `.dark` class on the root element (same approach as tailwind config).
+*/
+
+/* Theme variables (kept in sync with tailwind-config.js) */
+:root {
+  --primary: #ee2b8c;
+  --primary-hover: #d41b76;
+  --background-light: #f8f6f7;
+  --background-dark: #221019;
+  --text-main: #181114;
+  --text-muted: #896175;
+
+  /* radii & shadows */
+  --radius-full: 9999px;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+  --radius-2xl: 3rem;
+
+  --shadow-soft: 0 4px 20px -2px rgba(238, 43, 140, 0.1);
+  --shadow-hover: 0 10px 25px -5px rgba(238, 43, 140, 0.15);
+
+  /* sizing shortcuts */
+  --size-8: 32px;
+  --size-9: 36px;
+  --size-12: 48px;
+  --size-20: 80px;
+  --size-32: 128px;
+
+  --transition-default: 0.18s cubic-bezier(.2,.9,.2,1);
+}
+
+/* Dark mode toggle via .dark on <html> (kept consistent with tailwind-config.js) */
+:root,
+html {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after { box-sizing: inherit; }
+
+/* Page root - combines several Tailwind utilities */
+.page-root {
+  font-family: "Spline Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--background-light);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Dark theme overrides */
+html.dark .page-root,
+.dark .page-root {
+  background: var(--background-dark);
+  color: #fff; /* text-white fallback as in template */
+}
+
+/* Selection colors */
+.page-root ::selection {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Root container grouping layout utilities */
+.root-container {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Icon button - used in header social icons and elsewhere */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-9);
+  height: var(--size-9);
+  border-radius: var(--radius-full);
+  background: var(--background-light);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: background var(--transition-default), color var(--transition-default), transform var(--transition-default);
+  border: 0;
+  padding: 0;
+  line-height: 0;
+}
+.icon-btn:hover {
+  background: rgba(238,43,140,0.08);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+html.dark .icon-btn,
+.dark .icon-btn {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+
+/* Social buttons container (simple gap) */
+.social-buttons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Main navigation shortcuts */
+.main-nav {
+  display: none; /* mobile hidden */
+  align-items: center;
+  gap: 2rem;
+}
+@media (min-width: 768px) {
+  .main-nav { display: flex; }
+}
+
+/* nav-link base + modifiers */
+.nav-link {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--transition-default);
+  font-weight: 500;
+}
+.nav-link:hover { color: var(--primary); }
+.nav-link--primary {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+/* Buttons: primary and secondary */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 3rem; /* ~12 */
+  padding: 0 2rem;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+  box-shadow: var(--shadow-soft);
+  border: 0;
+}
+.btn-primary:hover {
+  background: var(--primary-hover);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 3rem;
+  padding: 0 2rem;
+  border-radius: var(--radius-full);
+  background: #fff;
+  border: 2px solid var(--background-light);
+  color: var(--text-main);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background var(--transition-default), color var(--transition-default);
+}
+html.dark .btn-secondary,
+.dark .btn-secondary {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255,255,255,0.08);
+}
+.btn-secondary:hover {
+  background: var(--background-light);
+}
+
+/* Small icon button used in footer (send) */
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-12);
+  height: var(--size-12);
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  border: 0;
+  transition: background var(--transition-default), transform var(--transition-default);
+}
+.btn-icon:hover { background: var(--primary-hover); transform: translateY(-2px); }
+
+/* Generic sizing shortcuts used in markup */
+.size-8 { width: var(--size-8); height: var(--size-8); }
+.size-9 { width: var(--size-9); height: var(--size-9); }
+.size-12 { width: var(--size-12); height: var(--size-12); }
+.size-20 { width: var(--size-20); height: var(--size-20); }
+.size-32 { width: var(--size-32); height: var(--size-32); }
+
+/* Sections and main content wrappers */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.section-hero {
+  width: 100%;
+  max-width: 78rem; /* ~6xl */
+  padding: 2rem 1rem;
+}
+@media (min-width: 1024px) {
+  .section-hero { padding-top: 4rem; padding-bottom: 4rem; }
+}
+
+/* Blog grid and cards */
+.blog-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 640px) {
+  .blog-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .blog-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Card common */
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: #fff;
+  color: var(--text-main);
+  padding: 1rem;
+  border-radius: var(--radius-2xl);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+  transition: transform 300ms ease, box-shadow 200ms ease;
+  overflow: hidden;
+  border: 1px solid var(--background-light);
+}
+html.dark .blog-card,
+.dark .blog-card {
+  background: #2d1b24;
+  border-color: rgba(255,255,255,0.04);
+  color: #fff;
+}
+.blog-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Card media area */
+.card-media {
+  position: relative;
+  width: 100%;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+.card-media__image {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  transition: transform 500ms ease;
+}
+.blog-card:hover .card-media__image,
+.card-media:hover .card-media__image {
+  transform: scale(1.05);
+}
+
+/* badge on media */
+.card-media__badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: rgba(255,255,255,0.9);
+  color: var(--primary);
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.75rem;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+}
+html.dark .card-media__badge,
+.dark .card-media__badge {
+  background: rgba(255,255,255,0.06);
+  color: var(--primary);
+}
+
+/* Card body text */
+.card-body { display: flex; flex-direction: column; gap: 0.5rem; padding-top: 0.25rem; }
+.card-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0;
+  transition: color 120ms ease;
+}
+html.dark .card-title,
+.dark .card-title { color: #fff; }
+
+.card-excerpt {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+html.dark .card-excerpt,
+.dark .card-excerpt { color: rgba(255,255,255,0.75); }
+
+.card-meta {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.8rem;
+  color: rgba(0,0,0,0.6);
+}
+html.dark .card-meta,
+.dark .card-meta { color: rgba(255,255,255,0.6); }
+
+/* Featured gallery grid */
+.grid-featured {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  .grid-featured { grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+}
+
+/* gallery item base */
+.group.gallery-item,
+.group.gallery-item > .h-full {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  position: relative;
+}
+.group.gallery-item {
+  cursor: pointer;
+  transition: transform 700ms ease;
+}
+.group.gallery-item:hover { transform: scale(1.02); }
+
+/* overlay gradient used in gallery items (approx) */
+.group.gallery-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 30%, transparent 60%);
+  opacity: 0.6;
+  transition: opacity 300ms ease;
+}
+.group.gallery-item:hover::after { opacity: 0.8; }
+
+/* Footer / newsletter shortcuts */
+.site-footer {
+  margin-top: auto;
+  width: 100%;
+  border-top: 1px solid rgba(238,43,140,0.06);
+  background: #fff;
+  color: var(--text-main);
+}
+html.dark .site-footer,
+.dark .site-footer {
+  background: var(--background-dark);
+  border-top-color: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.9);
+}
+
+/* Footer inner layout */
+.site-footer .mx-auto {
+  max-width: 78rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 3rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+/* newsletter input */
+.site-footer input[type="email"] {
+  height: var(--size-12);
+  padding: 0 1.5rem;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--background-light);
+  background: var(--background-light);
+  color: inherit;
+  outline: none;
+  box-sizing: border-box;
+}
+.site-footer input[type="email"]::placeholder {
+  color: rgba(0,0,0,0.35);
+}
+html.dark .site-footer input[type="email"],
+.dark .site-footer input[type="email"] {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.06);
+  color: #fff;
+}
+.site-footer form { display: flex; gap: 0.5rem; align-items: center; }
+
+/* small helpers */
+.text-primary { color: var(--primary); }
+.lead { max-width: 42rem; color: var(--text-muted); }
+
+/* Accessibility / focus */
+a:focus, button:focus, input:focus {
+  outline: 3px solid rgba(238,43,140,0.12);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Small utility to visually hide an element but keep it accessible (if needed) */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
+
+/* End of file */

@@ -17,6 +17,7 @@ func main() {
 	c := make(chan struct{})
 	js.Global().Set("renderIndex", js.FuncOf(renderIndex))
 	js.Global().Set("renderDynamicContent", js.FuncOf(renderDynamicContent))
+	js.Global().Set("renderHome", js.FuncOf(renderHome))
 	fmt.Println("Go: exports set, waiting...")
 	<-c
 }
@@ -60,6 +61,10 @@ func renderDynamicContent(this js.Value, args []js.Value) interface{} {
 	)
 
 	return renderToString(component)
+}
+
+func renderHome(this js.Value, args []js.Value) interface{} {
+	return renderToString(Home())
 }
 
 func renderToString(c templ.Component) string {

@@ -4,9 +4,14 @@
 export GOOS=js
 export GOARCH=wasm
 
+generate:
+	@echo "Generating templ templates"
+	templ generate
+
+
 # Default target
 .PHONY: build
-build:
+build: generate
 	@echo "Building WASM module with TinyGo..."
 	tinygo build -o main.wasm -target wasm .
 	@if [ ! -f wasm_exec.js ]; then \

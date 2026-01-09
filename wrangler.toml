@@ -9,3 +9,7 @@ compatibility_flags = ["nodejs_compat"]
 type = "CompiledWasm"
 globs = ["**/*.wasm"]
 fallthrough = false
+
+[assets]
+directory = "./public"
+binding = "ASSETS"

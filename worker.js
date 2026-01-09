@@ -45,6 +45,18 @@ export default {
     try {
       await initWasm(env);
 
+      // Try to serve static assets first
+      if (env.ASSETS) {
+        try {
+          const assetResponse = await env.ASSETS.fetch(request);
+          if (assetResponse.status !== 404) {
+            return assetResponse;
+          }
+        } catch (e) {
+          // Fall through to dynamic routes
+        }
+      }
+
       const url = new URL(request.url);
 
       if (url.pathname === "/dynamic") {
@@ -59,7 +71,19 @@ export default {
         });
       }
 
-      if (url.pathname === "/" || true) {
+      if (url.pathname === "/home") {
+        if (typeof globalThis.renderHome !== "function") {
+          throw new Error(
+            "renderHome is not defined. WASM may not have initialized correctly.",
+          );
+        }
+        const html = globalThis.renderHome();
+        return new Response(html, {
+          headers: { "Content-Type": "text/html" },
+        });
+      }
+
+      if (url.pathname === "/") {
         if (typeof globalThis.renderIndex !== "function") {
           throw new Error(
             "renderIndex is not defined. WASM may not have initialized correctly.",
