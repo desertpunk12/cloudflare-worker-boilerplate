@@ -13,3 +13,8 @@ fallthrough = false
 [assets]
 directory = "./public"
 binding = "ASSETS"
+
+[[kv_namespaces]]
+binding = "miseriaeentries"
+id = "todo_replace_with_kv_id"
+preview_id = "todo_replace_with_preview_id"

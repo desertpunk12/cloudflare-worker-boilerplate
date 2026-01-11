@@ -83,6 +83,24 @@ export default {
         });
       }
 
+      if (url.pathname === "/kv") {
+        // Bind the KV namespace to global scope so Go can find it using js.Global().Get("KV")
+        // 'KV_DEMO' must match the binding name in wrangler.toml
+        globalThis.KV = env.KV_DEMO;
+
+        if (typeof globalThis.renderKV !== "function") {
+          throw new Error(
+            "renderKV is not defined. WASM may not have initialized correctly.",
+          );
+        }
+
+        // renderKV returns a Promise, so we await it
+        const html = await globalThis.renderKV();
+        return new Response(html, {
+          headers: { "Content-Type": "text/html" },
+        });
+      }
+
       if (url.pathname === "/") {
         if (typeof globalThis.renderIndex !== "function") {
           throw new Error(

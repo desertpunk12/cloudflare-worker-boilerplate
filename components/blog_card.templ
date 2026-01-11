@@ -1,0 +1,28 @@
+package components
+
+// Blog Card Props
+type BlogCardProps struct {
+	ImageURL string
+	ImageAlt string
+	Badge    string
+	Title    string
+	Excerpt  string
+	Date     string
+}
+
+templ BlogCard(props BlogCardProps) {
+	<div class="blog-card">
+		<div class="card-media">
+			<div class="card-media__image" data-alt={ props.ImageAlt } style={ templ.SafeCSS("background-image: url(" + props.ImageURL + ");") }></div>
+			<div class="card-media__badge">{ props.Badge }</div>
+		</div>
+		<div class="card-body">
+			<h3 class="card-title">{ props.Title }</h3>
+			<p class="card-excerpt">{ props.Excerpt }</p>
+			<div class="card-meta">
+				<span class="material-symbols-outlined">calendar_today</span>
+				<span>{ props.Date }</span>
+			</div>
+		</div>
+	</div>
+}

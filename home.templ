@@ -1,5 +1,28 @@
 package main
 
+import "cloudflare-worker-boilerplate/components"
+
+// Shared CSS Classes
+const (
+	// Hero shared classes
+	btnBase = "flex h-12 items-center justify-center gap-2 rounded-full px-8 text-base font-bold transition-all"
+
+	// Navbar shared classes
+	btnSocials = ""
+
+	// Gallery shared classes
+	galleryCard         = "group relative aspect-[3/4] cursor-pointer overflow-hidden rounded-2xl md:rounded-3xl shadow-md"
+	galleryCardOffset   = "md:translate-y-8"
+	galleryCardImage    = "h-full w-full bg-center bg-cover transition-transform duration-700 group-hover:scale-110"
+	galleryCardOverlay  = "absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 transition-opacity group-hover:opacity-80"
+	galleryCardContent  = "absolute bottom-0 left-0 p-4 translate-y-4 transition-transform duration-300 group-hover:translate-y-0"
+	galleryCardTitle    = "text-lg font-bold text-white"
+	galleryCardSubtitle = "text-xs font-medium text-white/80 opacity-0 transition-opacity delay-75 duration-300 group-hover:opacity-100"
+
+	// Footer shared classes
+	footerButton = "text-text-muted transition-colors hover:text-primary dark:text-gray-500"
+)
+
 templ Home() {
 	<!DOCTYPE html>
 	<html class="light" lang="en">
@@ -12,16 +35,13 @@ templ Home() {
 			<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 			<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 			<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-			
 			<!-- Tailwind CSS -->
 			<link rel="stylesheet" href="/assets/styles/home.css"/>
 			<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 			<script src="/assets/scripts/tailwind-config.js"></script>
 			<script src="/assets/scripts/theme-toggle.js" defer></script>
-			
 			<!-- HTMX -->
 			<script src="https://unpkg.com/htmx.org@2.0.0"></script>
-			
 			<style>
 				/* Smooth transitions for HTMX swapping */
 				.htmx-settling {
@@ -36,7 +56,6 @@ templ Home() {
 		<body class="page-root fade-in" hx-boost="true" hx-indicator="#global-loader">
 			<!-- Optional Global Loader -->
 			<div id="global-loader" class="fixed top-0 left-0 w-full h-1 bg-primary z-[60] hidden htmx-request:block"></div>
-
 			<div class="root-container">
 				<!-- Navigation -->
 				<header class="sticky top-0 z-50 w-full px-4 py-4 md:px-6 lg:px-8">
@@ -84,7 +103,7 @@ templ Home() {
 											<span>Welcome to my world</span>
 										</div>
 										<h1 class="text-4xl font-black leading-[1.1] tracking-tight text-text-main dark:text-white md:text-5xl lg:text-6xl">
-											Bringing Characters 
+											Bringing Characters
 											<br class="hidden lg:block"/>
 											to <span class="text-primary">Life!</span> ✨
 										</h1>
@@ -93,11 +112,11 @@ templ Home() {
 										</p>
 									</div>
 									<div class="flex flex-col gap-3 sm:flex-row sm:justify-center md:justify-start">
-										<button class="flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-8 text-base font-bold text-white transition-all hover:bg-primary-hover hover:shadow-soft hover:-translate-y-0.5">
+										<button class={ btnBase, "bg-primary text-white hover:bg-primary-hover hover:shadow-soft hover:-translate-y-0.5" }>
 											<span>See My Portfolio</span>
 											<span class="material-symbols-outlined text-sm">arrow_forward</span>
 										</button>
-										<a href="/blog" class="flex h-12 items-center justify-center gap-2 rounded-full bg-white border-2 border-background-light dark:border-white/10 dark:bg-transparent px-8 text-base font-bold text-text-main dark:text-white transition-all hover:bg-background-light dark:hover:bg-white/5">
+										<a href="/blog" class={ btnBase, "bg-white border-2 border-background-light dark:border-white/10 dark:bg-transparent text-text-main dark:text-white hover:bg-background-light dark:hover:bg-white/5" }>
 											<span>Read Blog</span>
 										</a>
 									</div>
@@ -134,51 +153,30 @@ templ Home() {
 							<a class="hidden text-sm font-bold text-primary hover:text-primary-hover sm:block" href="#">View All Posts -&gt;</a>
 						</div>
 						<div class="blog-grid">
-							<!-- Blog Card 1 -->
-							<div class="blog-card">
-								<div class="card-media">
-									<div class="card-media__image" data-alt="Collection of colorful cosplay wigs on mannequin heads" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDdIxRQ9bdgjsMcUMJ3EytgySfnsqfPIzc6P_SRxgdIniATcV4713b15JiPUH-fjfMtgNPkQZxIfyEzD3Pjc6OSVH4hNfrQeXc7O3l1T3q-_1Q9MT-ZNNBhS-m_6tuOuO1sBIGtnzoDEl8Ha05UVLFEuQNWHddgIzxskGXZ6KojcBddJkET598CMZ6VovFyv2cppN3NoguootytmAxJsx-sPyNsQjc1DQzASVK2KjcB2xWIa9ebKXd9qVsvdNzl44ofZSQM6iVCGdyH');"></div>
-									<div class="card-media__badge">Tutorials</div>
-								</div>
-								<div class="card-body">
-									<h3 class="card-title">How to style wigs for beginners</h3>
-									<p class="card-excerpt">Learn the basics of cutting, teasing, and spraying your wigs to gravity-defying perfection.</p>
-									<div class="card-meta">
-										<span class="material-symbols-outlined">calendar_today</span>
-										<span>Oct 12, 2023</span>
-									</div>
-								</div>
-							</div>
-							<!-- Blog Card 2 -->
-							<div class="blog-card">
-								<div class="card-media">
-									<div class="card-media__image" data-alt="Crowd of people at a bright anime convention in Tokyo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAOqvuDjkqgAdFRG2_tsmrR5Esb-o2gK-O9t0o18HdUcywNFQy9hkMLK3Mwx5DxYY48GBWVdPZSG9AjTCMYQ2HfN127BqMqapxv8VQ4V2XBeNSlTqPWN2ZFqgfWFeOEtl4UlO8EBc5J3YtSBgfxm2VztPKL1CCMu6omQE0gl1hbg-EJUE4Gj664Bv9pT67PIsefjhWm94VgymAE63xQge1ICOHD4etNy0NOVV3ZwM0Sm-L7CtWEl-P_XQbom7EsPDXaIrBfgISUDEZY');"></div>
-									<div class="card-media__badge">Travel</div>
-								</div>
-								<div class="card-body">
-									<h3 class="card-title">Convention Vlog: Tokyo Game Show</h3>
-									<p class="card-excerpt">Come with me as I explore one of the biggest gaming conventions in the world!</p>
-									<div class="card-meta">
-										<span class="material-symbols-outlined">calendar_today</span>
-										<span>Sep 28, 2023</span>
-									</div>
-								</div>
-							</div>
-							<!-- Blog Card 3 -->
-							<div class="blog-card">
-								<div class="card-media">
-									<div class="card-media__image" data-alt="Sewing machine with pink fabric and thread spools on a table" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCLwjHQ7ltnCaxsyblXwO9nwP3W7fKa3r2-IWMUubxYMHWpO2UAODP0a1Hj0mtp_V94DBYQZKIv4QcYvxwgGS7vSkkJK-kGPTWyCjYbK_6CA_0P63XiaB_4Ft9J-k32WLUI0JbHZQrZa0sCgKI-Ka2z9PRldfw-7IYpSh0Ghbrse0MWWK36-XlPdMzlXhvTzXFPlIfGyOlpwUJ47v7lqFOWf2yzLo-b9cgWKyis5FlX7KekMsm8SkdrvT0Kjqv4ase4YdPWMv38ncr-');"></div>
-									<div class="card-media__badge">Behind the Scenes</div>
-								</div>
-								<div class="card-body">
-									<h3 class="card-title">My sewing setup tour</h3>
-									<p class="card-excerpt">A look at the tools, machines, and organization hacks I use to create my costumes.</p>
-									<div class="card-meta">
-										<span class="material-symbols-outlined">calendar_today</span>
-										<span>Aug 15, 2023</span>
-									</div>
-								</div>
-							</div>
+							@components.BlogCard(components.BlogCardProps{
+								ImageURL: "https://lh3.googleusercontent.com/aida-public/AB6AXuDdIxRQ9bdgjsMcUMJ3EytgySfnsqfPIzc6P_SRxgdIniATcV4713b15JiPUH-fjfMtgNPkQZxIfyEzD3Pjc6OSVH4hNfrQeXc7O3l1T3q-_1Q9MT-ZNNBhS-m_6tuOuO1sBIGtnzoDEl8Ha05UVLFEuQNWHddgIzxskGXZ6KojcBddJkET598CMZ6VovFyv2cppN3NoguootytmAxJsx-sPyNsQjc1DQzASVK2KjcB2xWIa9ebKXd9qVsvdNzl44ofZSQM6iVCGdyH",
+								ImageAlt: "Collection of colorful cosplay wigs on mannequin heads",
+								Badge:    "Tutorials",
+								Title:    "How to style wigs for beginners",
+								Excerpt:  "Learn the basics of cutting, teasing, and spraying your wigs to gravity-defying perfection.",
+								Date:     "Oct 12, 2023",
+							})
+							@components.BlogCard(components.BlogCardProps{
+								ImageURL: "https://lh3.googleusercontent.com/aida-public/AB6AXuAOqvuDjkqgAdFRG2_tsmrR5Esb-o2gK-O9t0o18HdUcywNFQy9hkMLK3Mwx5DxYY48GBWVdPZSG9AjTCMYQ2HfN127BqMqapxv8VQ4V2XBeNSlTqPWN2ZFqgfWFeOEtl4UlO8EBc5J3YtSBgfxm2VztPKL1CCMu6omQE0gl1hbg-EJUE4Gj664Bv9pT67PIsefjhWm94VgymAE63xQge1ICOHD4etNy0NOVV3ZwM0Sm-L7CtWEl-P_XQbom7EsPDXaIrBfgISUDEZY",
+								ImageAlt: "Crowd of people at a bright anime convention in Tokyo",
+								Badge:    "Travel",
+								Title:    "Convention Vlog: Tokyo Game Show",
+								Excerpt:  "Come with me as I explore one of the biggest gaming conventions in the world!",
+								Date:     "Sep 28, 2023",
+							})
+							@components.BlogCard(components.BlogCardProps{
+								ImageURL: "https://lh3.googleusercontent.com/aida-public/AB6AXuCLwjHQ7ltnCaxsyblXwO9nwP3W7fKa3r2-IWMUubxYMHWpO2UAODP0a1Hj0mtp_V94DBYQZKIv4QcYvxwgGS7vSkkJK-kGPTWyCjYbK_6CA_0P63XiaB_4Ft9J-k32WLUI0JbHZQrZa0sCgKI-Ka2z9PRldfw-7IYpSh0Ghbrse0MWWK36-XlPdMzlXhvTzXFPlIfGyOlpwUJ47v7lqFOWf2yzLo-b9cgWKyis5FlX7KekMsm8SkdrvT0Kjqv4ase4YdPWMv38ncr-",
+								ImageAlt: "Sewing machine with pink fabric and thread spools on a table",
+								Badge:    "Behind the Scenes",
+								Title:    "My sewing setup tour",
+								Excerpt:  "A look at the tools, machines, and organization hacks I use to create my costumes.",
+								Date:     "Aug 15, 2023",
+							})
 						</div>
 					</section>
 					<!-- Featured Cosplays Section -->
@@ -193,42 +191,34 @@ templ Home() {
 							<p class="mt-2 max-w-lg text-text-muted dark:text-gray-400">A selection of my favorite costumes from the past year.</p>
 						</div>
 						<div class="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-							<!-- Gallery Item 1 -->
-							<div class="group relative aspect-[3/4] cursor-pointer overflow-hidden rounded-2xl md:rounded-3xl shadow-md">
-								<div class="h-full w-full bg-center bg-cover transition-transform duration-700 group-hover:scale-110" data-alt="Woman in futuristic cyber punk cosplay with neon lights" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDD9JZ8aUAKisRziguXoXwrwo4WhQlfTqRn3JGeP0uX3pCK6lwqqDQbtTjQGs7PPcfBFCehSFLWDQ40Pm57noO6wyZURf3M3xhdUSZwQyDp84PTK5WBvjABgGCTAhtJibBwxXdQmDE8AKkAtCpFz09AF-3U08o8TqGX687g389EgRxnR_-KCgj3k0q2xk6RCbJhaldU6L95VTbqEzr-PRfzD4YMk_QkPp0-bFsTnjYyrUjOfqMRAxYB5r1BN1lZaJHsPNGjQt9L0N_T');"></div>
-								<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 transition-opacity group-hover:opacity-80"></div>
-								<div class="absolute bottom-0 left-0 p-4 translate-y-4 transition-transform duration-300 group-hover:translate-y-0">
-									<h3 class="text-lg font-bold text-white">Cyber Warrior</h3>
-									<p class="text-xs font-medium text-white/80 opacity-0 transition-opacity delay-75 duration-300 group-hover:opacity-100">Original Design</p>
-								</div>
-							</div>
-							<!-- Gallery Item 2 -->
-							<div class="group relative aspect-[3/4] cursor-pointer overflow-hidden rounded-2xl md:rounded-3xl shadow-md md:translate-y-8">
-								<div class="h-full w-full bg-center bg-cover transition-transform duration-700 group-hover:scale-110" data-alt="Cosplayer dressed as fantasy elf princess in forest setting" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA0vsX74uaRBQSO3Raj4iSo4DFMp7xCdG5zZIg0OLRyyGTtLItLpLpTGQyvCm4XIUSW8eo7CfmZJQJMLOXg_eCLyZe8xiB-fwD51Ih9GpbkGy80a0ZV7oyVh8oxjKt2uYxJ-1Dh3wi40iAZBoEGXUfFdd5uUe_eOCNCb0oMTNnfAJNx7CKWhv1pSglYrrkY7XXzAczzQvXYJq01OdC4wqageQS3WHzRRKf-37g6Tf8Iw-nY1cWpmVWyON2RahEjinnSZYBUwMpwtNbz');"></div>
-								<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 transition-opacity group-hover:opacity-80"></div>
-								<div class="absolute bottom-0 left-0 p-4 translate-y-4 transition-transform duration-300 group-hover:translate-y-0">
-									<h3 class="text-lg font-bold text-white">Forest Elf</h3>
-									<p class="text-xs font-medium text-white/80 opacity-0 transition-opacity delay-75 duration-300 group-hover:opacity-100">Fantasy RPG</p>
-								</div>
-							</div>
-							<!-- Gallery Item 3 -->
-							<div class="group relative aspect-[3/4] cursor-pointer overflow-hidden rounded-2xl md:rounded-3xl shadow-md">
-								<div class="h-full w-full bg-center bg-cover transition-transform duration-700 group-hover:scale-110" data-alt="Cosplayer in vibrant anime school uniform outdoors" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDuJbbl7n_y7zNiisnwpcPJxvIUErjGPTIjaaIr_B8MY1tBNjJ8GZD0OXBvY2iM09n9ow41iIh3Hc4_2UgTEd-UOfNm8962FbtgJuMYdU9qe8CQlRiTHtGcmsjmSv3CwsJUtwS4IlNrZLNZaOT7eVHrr9DImUneaWfUx76BlzCaTlYh3k7o8KHDhkw_OeGgLq3eFM6xNxOrHuUXysLgmkgDsxoMrCJdIbsdGTMMn76DqYZMxVIRWBgaYgaQy5rlGEk-Y2vafNXqGSCf');"></div>
-								<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 transition-opacity group-hover:opacity-80"></div>
-								<div class="absolute bottom-0 left-0 p-4 translate-y-4 transition-transform duration-300 group-hover:translate-y-0">
-									<h3 class="text-lg font-bold text-white">School Idol</h3>
-									<p class="text-xs font-medium text-white/80 opacity-0 transition-opacity delay-75 duration-300 group-hover:opacity-100">Anime Series</p>
-								</div>
-							</div>
-							<!-- Gallery Item 4 -->
-							<div class="group relative aspect-[3/4] cursor-pointer overflow-hidden rounded-2xl md:rounded-3xl shadow-md md:translate-y-8">
-								<div class="h-full w-full bg-center bg-cover transition-transform duration-700 group-hover:scale-110" data-alt="Close up of fantasy makeup with gems and glitter" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDyDjhscDJyTr0Nknw6GxtW6JOJvJT7WVsj_MwcwMBE57mVZLOqZsC3guWnfL2OEscu82lS25pKNL41iCXsPX_HAw9yZ3O4iruZINvXEOFSSuD3GR4nl0XQ1imiPqIZVY-2mKAbk9sJIxXaLQ8bvohg7puyEe7cOzwKR44bsX-gBi7bH-UPkyLueMoCs3pTepKwAz5fvJoZjCPQv-hdiTksNU_tfTBbAx_SjLqDb1utheq-yYvhD0CzoyBcqxVBjyIUwb9Jidy8ef1X');"></div>
-								<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 transition-opacity group-hover:opacity-80"></div>
-								<div class="absolute bottom-0 left-0 p-4 translate-y-4 transition-transform duration-300 group-hover:translate-y-0">
-									<h3 class="text-lg font-bold text-white">Gem Sorceress</h3>
-									<p class="text-xs font-medium text-white/80 opacity-0 transition-opacity delay-75 duration-300 group-hover:opacity-100">D&D Character</p>
-								</div>
-							</div>
+							@components.GalleryCard(components.GalleryCardProps{
+								ImageURL: "https://lh3.googleusercontent.com/aida-public/AB6AXuDD9JZ8aUAKisRziguXoXwrwo4WhQlfTqRn3JGeP0uX3pCK6lwqqDQbtTjQGs7PPcfBFCehSFLWDQ40Pm57noO6wyZURf3M3xhdUSZwQyDp84PTK5WBvjABgGCTAhtJibBwxXdQmDE8AKkAtCpFz09AF-3U08o8TqGX687g389EgRxnR_-KCgj3k0q2xk6RCbJhaldU6L95VTbqEzr-PRfzD4YMk_QkPp0-bFsTnjYyrUjOfqMRAxYB5r1BN1lZaJHsPNGjQt9L0N_T",
+								ImageAlt: "Woman in futuristic cyber punk cosplay with neon lights",
+								Title:    "Cyber Warrior",
+								Subtitle: "Original Design",
+								Offset:   false,
+							})
+							@components.GalleryCard(components.GalleryCardProps{
+								ImageURL: "https://lh3.googleusercontent.com/aida-public/AB6AXuA0vsX74uaRBQSO3Raj4iSo4DFMp7xCdG5zZIg0OLRyyGTtLItLpLpTGQyvCm4XIUSW8eo7CfmZJQJMLOXg_eCLyZe8xiB-fwD51Ih9GpbkGy80a0ZV7oyVh8oxjKt2uYxJ-1Dh3wi40iAZBoEGXUfFdd5uUe_eOCNCb0oMTNnfAJNx7CKWhv1pSglYrrkY7XXzAczzQvXYJq01OdC4wqageQS3WHzRRKf-37g6Tf8Iw-nY1cWpmVWyON2RahEjinnSZYBUwMpwtNbz",
+								ImageAlt: "Cosplayer dressed as fantasy elf princess in forest setting",
+								Title:    "Forest Elf",
+								Subtitle: "Fantasy RPG",
+								Offset:   true,
+							})
+							@components.GalleryCard(components.GalleryCardProps{
+								ImageURL: "https://lh3.googleusercontent.com/aida-public/AB6AXuDuJbbl7n_y7zNiisnwpcPJxvIUErjGPTIjaaIr_B8MY1tBNjJ8GZD0OXBvY2iM09n9ow41iIh3Hc4_2UgTEd-UOfNm8962FbtgJuMYdU9qe8CQlRiTHtGcmsjmSv3CwsJUtwS4IlNrZLNZaOT7eVHrr9DImUneaWfUx76BlzCaTlYh3k7o8KHDhkw_OeGgLq3eFM6xNxOrHuUXysLgmkgDsxoMrCJdIbsdGTMMn76DqYZMxVIRWBgaYgaQy5rlGEk-Y2vafNXqGSCf",
+								ImageAlt: "Cosplayer in vibrant anime school uniform outdoors",
+								Title:    "School Idol",
+								Subtitle: "Anime Series",
+								Offset:   false,
+							})
+							@components.GalleryCard(components.GalleryCardProps{
+								ImageURL: "https://lh3.googleusercontent.com/aida-public/AB6AXuDyDjhscDJyTr0Nknw6GxtW6JOJvJT7WVsj_MwcwMBE57mVZLOqZsC3guWnfL2OEscu82lS25pKNL41iCXsPX_HAw9yZ3O4iruZINvXEOFSSuD3GR4nl0XQ1imiPqIZVY-2mKAbk9sJIxXaLQ8bvohg7puyEe7cOzwKR44bsX-gBi7bH-UPkyLueMoCs3pTepKwAz5fvJoZjCPQv-hdiTksNU_tfTBbAx_SjLqDb1utheq-yYvhD0CzoyBcqxVBjyIUwb9Jidy8ef1X",
+								ImageAlt: "Close up of fantasy makeup with gems and glitter",
+								Title:    "Gem Sorceress",
+								Subtitle: "D&D Character",
+								Offset:   true,
+							})
 						</div>
 					</section>
 					<!-- Newsletter / Footer -->
@@ -250,9 +240,9 @@ templ Home() {
 							<div class="flex w-full flex-col items-center justify-between gap-6 border-t border-dashed border-gray-200 pt-8 dark:border-gray-800 md:flex-row">
 								<p class="text-sm font-medium text-text-muted dark:text-gray-500">© 2023 CosplayKitten. All rights reserved.</p>
 								<div class="flex items-center gap-6">
-									<a class="text-text-muted transition-colors hover:text-primary dark:text-gray-500" href="#">Home</a>
-									<a class="text-text-muted transition-colors hover:text-primary dark:text-gray-500" href="#">Privacy</a>
-									<a class="text-text-muted transition-colors hover:text-primary dark:text-gray-500" href="#">Contact</a>
+									<a class={ footerButton } href="#">Home</a>
+									<a class={ footerButton } href="#">Privacy</a>
+									<a class={ footerButton } href="#">Contact</a>
 								</div>
 								<p class="flex items-center gap-1 text-sm font-medium text-text-muted dark:text-gray-500">
 									Made with <span class="text-primary material-symbols-outlined text-[16px] font-bold">favorite</span>

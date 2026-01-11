@@ -1,0 +1,32 @@
+package components
+
+// Gallery Card Props
+type GalleryCardProps struct {
+	ImageURL string
+	ImageAlt string
+	Title    string
+	Subtitle string
+	Offset   bool // whether to apply the offset class for staggered layout
+}
+
+// CSS Classes for gallery card
+const (
+	galleryCard         = "group relative aspect-[3/4] cursor-pointer overflow-hidden rounded-2xl md:rounded-3xl shadow-md"
+	galleryCardOffset   = "md:translate-y-8"
+	galleryCardImage    = "h-full w-full bg-center bg-cover transition-transform duration-700 group-hover:scale-110"
+	galleryCardOverlay  = "absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 transition-opacity group-hover:opacity-80"
+	galleryCardContent  = "absolute bottom-0 left-0 p-4 translate-y-4 transition-transform duration-300 group-hover:translate-y-0"
+	galleryCardTitle    = "text-lg font-bold text-white"
+	galleryCardSubtitle = "text-xs font-medium text-white/80 opacity-0 transition-opacity delay-75 duration-300 group-hover:opacity-100"
+)
+
+templ GalleryCard(props GalleryCardProps) {
+	<div class={ galleryCard, templ.KV("md:translate-y-8", props.Offset) }>
+		<div class={ galleryCardImage } data-alt={ props.ImageAlt } style={ templ.SafeCSS("background-image: url(" + props.ImageURL + ");") }></div>
+		<div class={ galleryCardOverlay }></div>
+		<div class={ galleryCardContent }>
+			<h3 class={ galleryCardTitle }>{ props.Title }</h3>
+			<p class={ galleryCardSubtitle }>{ props.Subtitle }</p>
+		</div>
+	</div>
+}
